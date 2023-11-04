@@ -1,37 +1,31 @@
 package org.launchcode.techjobs.persistent.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
-public class Job {
+public class Job extends AbstractEntity { //extended
 
-    @Id
-    @GeneratedValue
-    private int id;
+    private String name; //updated
 
-    private String name;
-    private String employer;
-    private String skills;
-
+    @ManyToOne //added
+    @JoinColumn (name = "employer_id") //added
+    private Employer employer;//updated
+    private String skills;//updated
 
     public Job() {
     }
 
     // Initialize the id and value fields.
-    public Job(String anEmployer, String someSkills) {
-        super();
-        this.employer = anEmployer;
-        this.skills = someSkills;
+    public Job(String name, Employer employer, String skills) { //updated 20-23
+        this.name = name;
+        this.employer = employer;
+        this.skills = skills;
     }
 
     // Getters and setters.
-    
-    public String getName() {
+    public String getName() { //updated getters & setters
         return name;
     }
 
@@ -39,11 +33,11 @@ public class Job {
         this.name = name;
     }
 
-    public String getEmployer() {
+    public Employer getEmployer() {
         return employer;
     }
 
-    public void setEmployer(String employer) {
+    public void setEmployer(Employer employer) {
         this.employer = employer;
     }
 
@@ -54,5 +48,5 @@ public class Job {
     public void setSkills(String skills) {
         this.skills = skills;
     }
-
 }
+
