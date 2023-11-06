@@ -7,10 +7,6 @@ import jakarta.persistence.*;
 @Entity
 public class Job extends AbstractEntity { //extended
 
-    @Id //added to generate id when adding a new job 11.5.23
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     @ManyToOne //added
     @JoinColumn (name = "employer_id") //added
     private Employer employer;//updated
