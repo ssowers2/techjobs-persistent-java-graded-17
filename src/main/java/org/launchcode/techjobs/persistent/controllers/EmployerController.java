@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import org.launchcode.techjobs.persistent.models.data.EmployerRepository;//added
 
-
 @Controller
 @RequestMapping("employers")
 public class EmployerController {

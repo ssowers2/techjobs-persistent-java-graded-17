@@ -5,6 +5,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +18,7 @@ import java.util.List;
 
         @OneToMany //added 17 - 19 and imports
         @JoinColumn (name = "employer_id")
-        private List <Job> jobs;
+        private List <Job> jobs = new ArrayList<>();
 
         public String getLocation() {
             return location;

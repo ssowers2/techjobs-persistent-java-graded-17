@@ -53,4 +53,3 @@ public class SkillController {
         return "skills/index";
     }
 } //added this entire SkillController code
-

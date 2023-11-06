@@ -7,7 +7,9 @@ import jakarta.persistence.*;
 @Entity
 public class Job extends AbstractEntity { //extended
 
-    private String name; //updated
+    @Id //added to generate id when adding a new job 11.5.23
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne //added
     @JoinColumn (name = "employer_id") //added
@@ -18,21 +20,12 @@ public class Job extends AbstractEntity { //extended
     }
 
     // Initialize the id and value fields.
-    public Job(String name, Employer employer, String skills) { //updated 20-23
-        this.name = name;
+    public Job(Employer employer, String skills) { //updated 20-23
         this.employer = employer;
         this.skills = skills;
     }
 
     // Getters and setters.
-    public String getName() { //updated getters & setters
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Employer getEmployer() {
         return employer;
     }
