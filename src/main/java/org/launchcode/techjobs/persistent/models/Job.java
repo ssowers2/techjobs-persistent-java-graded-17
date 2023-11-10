@@ -7,15 +7,9 @@ import java.util.List;
 public class Job extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "employer_id")
     private Employer employer;
 
     @ManyToMany
-    @JoinTable(
-            name = "job_skill",
-            joinColumns = @JoinColumn(name = "job_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
-    )
     private List<Skill> skills;
 
     public Job() {
@@ -27,7 +21,6 @@ public class Job extends AbstractEntity {
     }
 
     public Employer getEmployer() {
-
         return employer;
     }
 

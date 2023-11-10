@@ -9,6 +9,7 @@ import org.launchcode.techjobs.persistent.models.data.JobRepository;
 import org.launchcode.techjobs.persistent.models.data.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,9 @@ import java.util.*;
 /**
  * Created by LaunchCode
  */
+
 @Controller
+@RequestMapping("/")
 public class HomeController {
 
     @Autowired
@@ -28,13 +31,14 @@ public class HomeController {
     private JobRepository jobRepository;
 
     @Autowired
-    private SkillRepository skillRepository; //added private later
+    private SkillRepository skillRepository;
 
-    @RequestMapping("/")
+    @GetMapping
     public String index(Model model) {
 
         model.addAttribute("title", "MyJobs");
-
+        Iterable<Job> jobs = jobRepository.findAll();
+        model.addAttribute("jobs", jobs);
         return "index";
     }
 
@@ -54,26 +58,14 @@ public class HomeController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
-            model.addAttribute("employers", employerRepository.findAll());
-            model.addAttribute("skills", skillRepository.findAll());
             return "add";
         }
 
-        // Added 50-59 finding the selected employer by its id
-        Optional<Employer> employerOptional = employerRepository.findById(employerId);
-        if (employerOptional.isPresent()) {
-            Employer selectedEmployer = employerOptional.get();
-            newJob.setEmployer(selectedEmployer);
-        }
+        Employer selectedEmployer = employerRepository.findById(employerId).orElse(new Employer("Default Location"));
 
-       Set<Skill> selectedSkills = new HashSet<>();//???
+        List<Skill> selectedSkills = (List<Skill>) skillRepository.findAllById(skills);
 
-        for (Integer skillId : skills) {
-            Optional<Skill> skillOptional = skillRepository.findById(skillId);
-            skillOptional.ifPresent(selectedSkills::add);
-        }
-
-        newJob.setSkills((List<Skill>) selectedSkills);
+        newJob.setSkills(selectedSkills);
 
         jobRepository.save(newJob);
 

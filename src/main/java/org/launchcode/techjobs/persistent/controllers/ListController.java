@@ -7,6 +7,7 @@ import org.launchcode.techjobs.persistent.models.data.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,15 +34,16 @@ public class ListController {
     static HashMap<String, String> columnChoices = new HashMap<>();
 
     public ListController () {
-
         columnChoices.put("all", "All");
         columnChoices.put("employer", "Employer");
         columnChoices.put("skill", "Skill");
 
     }
 
-    @RequestMapping("")
+    @RequestMapping("") //shows list in application
     public String list(Model model) {
+        model.addAttribute("employers", employerRepository.findAll());
+        model.addAttribute("skills", skillRepository.findAll());
 
         return "list";
     }
@@ -58,7 +60,6 @@ public class ListController {
         }
 
         model.addAttribute("jobs", jobs);
-
         model.addAttribute("employers", employerRepository.findAll());//added
         model.addAttribute("skills", skillRepository.findAll());//added
 
