@@ -26,7 +26,8 @@ public class SearchController {
         return "search";
     }
 
-    // TODO #3 - Create a handler to process a search request and render the updated search view.
+    // TODO #3 - Create a handler to process a search request and render the
+
     @PostMapping("results")
     public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm){
         Iterable<Job> jobs;
@@ -41,4 +42,5 @@ public class SearchController {
 
         return "search";
     }
+
 }

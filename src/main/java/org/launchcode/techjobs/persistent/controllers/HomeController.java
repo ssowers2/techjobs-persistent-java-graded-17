@@ -35,10 +35,9 @@ public class HomeController {
 
     @GetMapping
     public String index(Model model) {
-
         model.addAttribute("title", "MyJobs");
-        Iterable<Job> jobs = jobRepository.findAll();
-        model.addAttribute("jobs", jobs);
+        Iterable<Job> jobs = jobRepository.findAll(); //added 11.10.23
+        model.addAttribute("jobs", jobs);//added 11.10.23
         return "index";
     }
 

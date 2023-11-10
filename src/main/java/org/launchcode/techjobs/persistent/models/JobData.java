@@ -12,7 +12,6 @@ public class JobData {
 
     /**
      * Returns the results of searching the Jobs data by field and search term.
-     *
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
@@ -66,25 +65,21 @@ public class JobData {
      * @return      List of all jobs with at least one field containing the value.
      */
     public static ArrayList<Job> findByValue(String value, Iterable<Job> allJobs) {
-
-
         ArrayList<Job> results = new ArrayList<>();
 
         for (Job job : allJobs) {
-
-            if (job.getName().toLowerCase().contains(value.toLowerCase())) {
-                results.add(job);
-            } else if (job.getEmployer().toString().toLowerCase().contains(value.toLowerCase())) {
-                results.add(job);
-            } else if (job.getSkills().toString().toLowerCase().contains(value.toLowerCase())) {
+            if (jobMatchesValue(job, value)) {
                 results.add(job);
             }
-
         }
 
         return results;
     }
 
+    public static boolean jobMatchesValue(Job job, String value) {
+        return job.getName().toLowerCase().contains(value.toLowerCase()) ||
+                (job.getEmployer() != null && job.getEmployer().toString().toLowerCase().contains(value.toLowerCase())) ||
+                job.getSkills().toString().toLowerCase().contains(value.toLowerCase());
+    }
 
 }
-
